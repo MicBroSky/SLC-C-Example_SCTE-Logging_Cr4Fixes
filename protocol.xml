@@ -1,0 +1,862 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+
+****************************************************************************
+*  Copyright (c) 2024,  Skyline Communications NV  All Rights Reserved.    *
+****************************************************************************
+
+By using this driver, you expressly agree with the usage terms and
+conditions set out below.
+This driver and all related materials are protected by copyrights and
+other intellectual property rights that exclusively belong
+to Skyline Communications.
+
+A user license granted for this driver is strictly for personal use only.
+This driver may not be used in any way by anyone without the prior
+written consent of Skyline Communications. Any sublicensing of this
+driver is forbidden.
+
+Any modifications to this driver by the user are only allowed for
+personal use and within the intended purpose of the driver,
+and will remain the sole responsibility of the user.
+Skyline Communications will not be responsible for any damages or
+malfunctions whatsoever of the driver resulting from a modification
+or adaptation by the user.
+
+The content of this driver is confidential information.
+The user hereby agrees to keep this confidential information strictly
+secret and confidential and not to disclose or reveal it, in whole
+or in part, directly or indirectly to any person, entity, organization
+or administration without the prior written consent of
+Skyline Communications.
+
+Any inquiries can be addressed to:
+
+	Skyline Communications NV
+	Ambachtenstraat 33
+	B-8870 Izegem
+	Belgium
+	Tel.	: +32 51 31 35 69
+	Fax.	: +32 51 31 01 29
+	E-mail	: info@skyline.be
+	Web		: www.skyline.be
+	Contact	: Ben Vandenberghe
+
+-->
+
+<Protocol xmlns="http://www.skyline.be/protocol">
+	<Name>Skyline Example SCTE Logging</Name>
+	<Description>Skyline Example SCTE Logging DataMiner connector</Description>
+	<Version>1.0.0.1</Version>
+	<IntegrationID>DMS-DRV-9036</IntegrationID>
+	<Provider>Skyline Communications</Provider>
+	<Vendor>Skyline Example</Vendor>
+	<VendorOID>1.3.6.1.4.1.8813.2.1218</VendorOID>
+	<DeviceOID>13</DeviceOID>
+	<ElementType>Example</ElementType>
+	<Type relativeTimers="true">virtual</Type>
+	<Display defaultPage="General" pageOrder="General"/>
+	<SNMP includepages="true">auto</SNMP>
+
+	<Compliancies>
+		<CassandraReady>true</CassandraReady>
+		<MinimumRequiredVersion>10.1.0.0 - 9966</MinimumRequiredVersion>
+	</Compliancies>
+
+	<Params>
+		<Param id="1" trending="false" save="true">
+			<Name>lastPrimaryKey</Name>
+			<Description>description</Description>
+			<Type>read</Type>
+			<Information>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<DefaultValue>0</DefaultValue>
+			</Interprete>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="9" trending="false">
+			<Name>ReadMe</Name>
+			<Description>Read Me</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Description of this example protocol.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+				<DefaultValue>
+					<![CDATA[
+This protocol demonstrates how SCTE Events should be filled into an elastic database.
+This is achieved through using a "Create SCTE Events" button where you can fill in various parts of the event which would be set inside of a protocol. 
+After confirming these values, the SCTE Event is then processed and sent to the elastic database. Most of the values can be filled by using a hexadecimal string given by a SCTE command which this protocol simulates the translation of. 
+Once on the elastic database, you can use the ID of the protocol and the table's ID (80000000) in order to find the values from the table. 
+
+The table features the following columns: 
+			-scte_key (Key)
+				An autoincremented value that starts from 0 and saves it placement between reboots.
+			-scte_ts (Timestamp)
+				A UTC timestamp based on the SCTE signal.
+			-scte_opid (Operation ID) 
+				The value of the opid (operation ID) field on the SCTE object's structure.
+			-scte_opname (Operation Name)
+				A text representation of the operation ID.
+			-scte_src (Source) 
+				It is a combination of the name that the SCTE Hexadecimal might have provided and the IP address.
+			-scte_str (Stream)
+				A representation of the source that the SCTE came from. It is usually provided by the SCTE Hexadecimal or from the device.
+			-scte_pgm (Program)
+				A representation of the device that the SCTE came from. It is usually the DataMiner Element's name.
+			-scte_obj (Object) 
+				A JSON representation of the SCTE 35 or SCTE104 operation used in this row.
+			-scte_segevntid (Segmentation Event ID)
+				A segmentation event identifier.
+			-scte_segupid (Segmentation UPID) 
+				The Unique Program Identifier for the SCTE Event.
+			-scte_segtypeid (Segmentation Type ID) 
+				An ID that corresponds to the type of starting or ending event being used.
+			-scte_segtypename (Segmenttion Type Name)
+				The Name of the SCTE Event.
+			-scte_fld1 (Field 1)
+				An extra field to fill in any additional information. 
+					]]>
+				</DefaultValue>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type lines="20">string</Type>
+			</Measurement>
+		</Param>
+
+		<Param id="100">
+			<Name>FakeSctePageButton</Name>
+			<Description></Description>
+			<Type>write</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Row>1</Row>
+						<Column>0</Column>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type width="110">pagebutton</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Fake SCTE Event...</Display>
+						<Value>Fake SCTE Event</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="101" trending="false">
+			<Name>FakeScteHexValue</Name>
+			<Description>Fake SCTE Hex Value</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>
+					<![CDATA[Provide an example and valid hexadecimal value for SCTE-35 parsing.
+Fills part of the Source, Field 1, Field 2, Field 3, Field 4, and Object fields of the table.]]>
+				</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+				<DefaultValue>0xFC304400000000000000FFF00506FE5B302CE1002E022C43554549000000037FFF0002DEB5F0011874656C656D756E646F5F455030303839363634353239353101000040842A4D</DefaultValue>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Fake SCTE Event</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type lines="3">string</Type>
+			</Measurement>
+		</Param>
+		<Param id="151" setter="true">
+			<Name>FakeScteHexValue</Name>
+			<Description>Fake SCTE Hex Value</Description>
+			<Type>write</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Fake SCTE Event</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="102" trending="false">
+			<Name>FakeScteStream</Name>
+			<Description>Fake SCTE Stream Value</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>
+					<![CDATA[The Name of where the SCTE is taken from.
+Fills the "stream" field of the table.
+It is usually the device's name from the DataMiner element.]]>
+				</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+				<DefaultValue>Stream1</DefaultValue>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Fake SCTE Event</Page>
+						<Column>0</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="152" setter="true">
+			<Name>FakeScteStream</Name>
+			<Description>Fake SCTE Stream Value</Description>
+			<Type>write</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Fake SCTE Event</Page>
+						<Column>0</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="103" trending="false">
+			<Name>FakeScteProgram</Name>
+			<Description>Fake SCTE Program Value</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>
+					<![CDATA[The Name of the Server/Device/Protocol the SCTE value comes from.
+Fills the "Program" field of the table.]]>
+				</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+				<DefaultValue>Program1</DefaultValue>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Fake SCTE Event</Page>
+						<Column>0</Column>
+						<Row>2</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="153" setter="true">
+			<Name>FakeScteProgram</Name>
+			<Description>Fake SCTE Program Value</Description>
+			<Type>write</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Fake SCTE Event</Page>
+						<Column>0</Column>
+						<Row>2</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="104" trending="false">
+			<Name>FakeScteOperationName</Name>
+			<Description>Fake SCTE Operation Name Value</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>
+					<![CDATA[The Name of the Operation being done.
+It is a customized value and is generally "insert_segmentation_descriptor_request_data".]]>
+				</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+				<DefaultValue>insert_segmentation_descriptor_request_data</DefaultValue>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Fake SCTE Event</Page>
+						<Column>0</Column>
+						<Row>3</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="154" setter="true">
+			<Name>FakeScteOperationName</Name>
+			<Description>Fake SCTE Operation Name Value</Description>
+			<Type>write</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Fake SCTE Event</Page>
+						<Column>0</Column>
+						<Row>3</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="105" trending="false" save="true">
+			<Name>FakeScteIpAddress</Name>
+			<Description>Fake SCTE IP Address Value</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>
+					<![CDATA[The IP address of the device where the SCTE command came from.
+It is usually the IP Address of the protocol.]]>
+				</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+				<DefaultValue>192.168.0.1</DefaultValue>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Fake SCTE Event</Page>
+						<Column>0</Column>
+						<Row>4</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="155" setter="true">
+			<Name>FakeScteIpAddress</Name>
+			<Description>Fake SCTE IP Address Value</Description>
+			<Type>write</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Fake SCTE Event</Page>
+						<Column>0</Column>
+						<Row>4</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="199">
+			<Name>FakeScteButton</Name>
+			<Description></Description>
+			<Type>write</Type>
+			<Information>
+				<Subtext>Button allowing to fake an SCTE Event.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Fake SCTE Event</Page>
+						<Column>0</Column>
+						<Row>5</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type width="110">button</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Fake Event</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+
+		<Param id="7999990">
+			<Name>scte_ContextMenu</Name>
+			<Description>Context Menu for SCTE Events</Description>
+			<Type>write</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Clear table</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet options="table:selection;confirm:The selected item(s) will be deleted permanently">
+						<Display>Delete selected event(s)...</Display>
+						<Value>2</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="8000000">
+			<Name>scte</Name>
+			<Description>SCTE Events</Description>
+			<Type>array</Type>
+			<ArrayOptions index="0" options=";database:1000">
+				<ColumnOption idx="0" pid="8000001" type="retrieved" options=""/>
+				<ColumnOption idx="1" pid="8000002" type="retrieved" options=""/>
+				<ColumnOption idx="2" pid="8000003" type="retrieved" options=""/>
+				<ColumnOption idx="3" pid="8000004" type="retrieved" options=""/>
+				<ColumnOption idx="4" pid="8000005" type="retrieved" options=""/>
+				<ColumnOption idx="5" pid="8000006" type="retrieved" options=""/>
+				<ColumnOption idx="6" pid="8000007" type="retrieved" options=""/>
+				<ColumnOption idx="7" pid="8000008" type="retrieved" options=""/>
+				<ColumnOption idx="8" pid="8000009" type="retrieved" options=""/>
+				<ColumnOption idx="9" pid="8000010" type="retrieved" options=""/>
+				<ColumnOption idx="10" pid="8000011" type="retrieved" options=""/>
+				<ColumnOption idx="11" pid="8000012" type="retrieved" options=""/>
+				<ColumnOption idx="12" pid="8000013" type="retrieved" options=""/>
+			</ArrayOptions>
+			<Database>
+				<IndexingOptions enabled="true"></IndexingOptions>
+				<CQLOptions>
+					<Clustering>0</Clustering>
+				</CQLOptions>
+			</Database>
+			<Information>
+			</Information>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type options="tab=lines:25,filter:true">table</Type>
+			</Measurement>
+		</Param>
+		<Param id="8000001" trending="false">
+			<Name>scte_key</Name>
+			<Description>Key [IDX] (SCTE Events)</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Database>
+				<ColumnDefinition>VARCHAR(50)</ColumnDefinition>
+				<Partition partitionsToKeep="12">month</Partition>
+			</Database>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="8000002" trending="false">
+			<Name>scte_ts</Name>
+			<Description>Timestamp (SCTE Events)</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Database>
+				<ColumnDefinition>DOUBLE</ColumnDefinition>
+			</Database>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type options="time;timeofday">number</Type>
+			</Measurement>
+		</Param>
+		<Param id="8000003" trending="false">
+			<Name>scte_opid</Name>
+			<Description>Operation ID (SCTE Events)</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Database>
+				<ColumnDefinition>INT</ColumnDefinition>
+			</Database>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="8000004" trending="false">
+			<Name>scte_opname</Name>
+			<Description>Operation Name (SCTE Events)</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Database>
+				<ColumnDefinition>TEXT</ColumnDefinition>
+			</Database>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="8000005" trending="false">
+			<Name>scte_src</Name>
+			<Description>Source (SCTE Events)</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Database>
+				<ColumnDefinition>TEXT</ColumnDefinition>
+			</Database>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="8000006" trending="false">
+			<Name>scte_str</Name>
+			<Description>Stream (SCTE Events)</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Database>
+				<ColumnDefinition>TEXT</ColumnDefinition>
+			</Database>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="8000007" trending="false">
+			<Name>scte_pgm</Name>
+			<Description>Program (SCTE Events)</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Database>
+				<ColumnDefinition>TEXT</ColumnDefinition>
+			</Database>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="8000008" trending="false">
+			<Name>scte_obj</Name>
+			<Description>Object (SCTE Events)</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Database>
+				<ColumnDefinition>TEXT</ColumnDefinition>
+			</Database>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="8000009" trending="false">
+			<Name>scte_segevntid</Name>
+			<Description>Segmentation Event ID (SCTE Events)</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Database>
+				<ColumnDefinition>TEXT</ColumnDefinition>
+			</Database>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="8000010" trending="false">
+			<Name>scte_segupid</Name>
+			<Description>Segmentation UPID (SCTE Events)</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Database>
+				<ColumnDefinition>TEXT</ColumnDefinition>
+			</Database>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="8000011" trending="false">
+			<Name>scte_segtypeid</Name>
+			<Description>Segmentation Type ID (SCTE Events)</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Database>
+				<ColumnDefinition>TEXT</ColumnDefinition>
+			</Database>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="8000012" trending="false">
+			<Name>scte_segtypename</Name>
+			<Description>Segmentation Type Name (SCTE Events)</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Database>
+				<ColumnDefinition>TEXT</ColumnDefinition>
+			</Database>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="8000013" trending="false">
+			<Name>scte_fld1</Name>
+			<Description>Field 1 (SCTE Events)</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Database>
+				<ColumnDefinition>TEXT</ColumnDefinition>
+			</Database>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+	</Params>
+
+	<QActions>
+		<QAction id="1" name="Precompiled Code" encoding="csharp" options="precompile" />
+
+		<QAction id="199" name="Fake SCTE Event" encoding="csharp" triggers="199" />
+
+		<QAction id="7999990" name="SCTE Events - ContextMenu" encoding="csharp" triggers="7999990" />
+	</QActions>
+
+	<VersionHistory>
+		<Branches>
+			<Branch id="1">
+				<Comment>Main Branch</Comment>
+				<SystemVersions>
+					<SystemVersion id="0">
+						<MajorVersions>
+							<MajorVersion id="0">
+								<MinorVersions>
+									<MinorVersion id="1">
+										<Date>2022-11-08</Date>
+										<Provider>
+											<Author>MBR</Author>
+											<Company>Skyline Communications</Company>
+										</Provider>
+										<Changes>
+											<NewFeature>Initial version</NewFeature>
+										</Changes>
+										<References>
+											<TaskId>196791</TaskId>
+										</References>
+									</MinorVersion>
+								</MinorVersions>
+							</MajorVersion>
+						</MajorVersions>
+					</SystemVersion>
+				</SystemVersions>
+			</Branch>
+		</Branches>
+	</VersionHistory>
+
+</Protocol>
