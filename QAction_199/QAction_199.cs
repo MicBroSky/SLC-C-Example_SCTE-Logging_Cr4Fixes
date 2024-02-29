@@ -20,19 +20,29 @@ public static class QAction
 	{
 		try
 		{
-			object[] values = (object[])protocol.GetParameters(new uint[] { Parameter.fakesctehexvalue, Parameter.fakesctestream, Parameter.fakescteprogram, Parameter.fakescteoperationname, Parameter.fakescteipaddress, Parameter.lastprimarykey });
+			object[] values = (object[])protocol.GetParameters(
+				new uint[]
+				{
+					Parameter.fakesctehexvalue,
+					Parameter.fakesctestream,
+					Parameter.fakescteprogram,
+					Parameter.fakescteoperationname,
+					Parameter.fakescteipaddress,
+					Parameter.lastprimarykey,
+				});
 
-			string hexString = Convert.ToString(values[0]);
-			string operationID = "-1";
-			string name = Convert.ToString(values[1]);
+			string scteHexString = Convert.ToString(values[0]);
+			string streamName = Convert.ToString(values[1]);
 			string program = Convert.ToString(values[2]);
-			string operatorName = Convert.ToString(values[3]);
+			string operationName = Convert.ToString(values[3]);
 			string ip = Convert.ToString(values[4]);
 			int primaryKey = Convert.ToInt32(values[5]);
 
+			string operationID = "-1";
+
 			List<object[]> rows = new List<object[]>();
 
-			Scte35Event scte = Scte35Event.FromHex(hexString);
+			Scte35Event scte = Scte35Event.FromHex(scteHexString);
 			foreach (SpliceDescriptor operation in scte.Operations)
 			{
 				if (ip.Contains("."))
@@ -51,9 +61,9 @@ public static class QAction
 					Scte_key_8000001 = primaryKey,
 					Scte_ts_8000002 = scte.Pts,
 					Scte_opid_8000003 = operationID,
-					Scte_opname_8000004 = operatorName,
+					Scte_opname_8000004 = operationName,
 					Scte_src_8000005 = operation.Upid.Split('_')[0] + ":" + ip,
-					Scte_str_8000006 = name,
+					Scte_str_8000006 = streamName,
 					Scte_pgm_8000007 = program,
 					Scte_obj_8000008 = JsonConvert.SerializeObject(scte, Formatting.None),
 					Scte_segevntid_8000009 = operation.EventID,
