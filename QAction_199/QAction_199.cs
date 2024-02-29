@@ -1,14 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Text.RegularExpressions;
 
 using Newtonsoft.Json;
 
-using Sewer56.BitStream;
-using Sewer56.BitStream.ByteStreams;
-
-using Skyline.DataMiner.Net.VirtualFunctions;
 using Skyline.DataMiner.Scripting;
 using Skyline.Protocol.SCTE35;
 
@@ -67,6 +62,7 @@ public static class QAction
 					Scte_segtypename_8000012 = operation.SegmentationTypeName,
 					Scte_fld1_8000013 = "N/A",
 				};
+
 				primaryKey++;
 				rows.Add(elasticRow.ToObjectArray());
 			}
@@ -76,7 +72,7 @@ public static class QAction
 		}
 		catch (Exception ex)
 		{
-			protocol.Log("QA" + protocol.QActionID + "|" + protocol.GetTriggerParameter() + "|Run|Exception thrown:" + Environment.NewLine + ex, LogType.Error, LogLevel.NoLogging);
+			protocol.Log($"QA{protocol.QActionID}|{protocol.GetTriggerParameter()}|Run|Exception thrown:{Environment.NewLine}{ex}", LogType.Error, LogLevel.NoLogging);
 		}
 	}
 }

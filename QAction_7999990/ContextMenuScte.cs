@@ -36,7 +36,7 @@ namespace Skyline.Protocol.SCTE.ContextMenu
 
 				default:
 					Protocol.Log(
-						"QA" + Protocol.QActionID + "|ContextMenuscte|Process|Unexpected ContextMenu value '" + ActionRaw + "'",
+						$"QA{Protocol.QActionID}|ContextMenuscte|Process|Unexpected ContextMenu value '{ActionRaw}'",
 						LogType.Error,
 						LogLevel.NoLogging);
 					break;
