@@ -33,7 +33,7 @@
 
 		public string SpliceCommand => spi.SpliceCommand;
 
-		public int TablePid => Convert.ToInt32(spi.TablePid);
+		public int TableId => Convert.ToInt32(spi.TableId);
 
 		public int ProtocolVersion => spi.ProtocolVersion;
 
@@ -41,9 +41,9 @@
 
 		#region Methods
 
-		public static Scte35Event FromHex(string hex)
+		public static Scte35Event FromBytes(byte[] bytes)
 		{
-			var reader = new BitStream<ArrayByteStream>(new ArrayByteStream(HexStringToByteArray(hex)));
+			var reader = new BitStream<ArrayByteStream>(new ArrayByteStream(bytes));
 
 			spi = new SpliceInfoSection(reader);
 
@@ -87,6 +87,12 @@
 			}
 
 			return new Scte35Event();
+		}
+
+		public static Scte35Event FromHex(string hexString)
+		{
+			var bytes = HexStringToByteArray(hexString);
+			return FromBytes(bytes);
 		}
 
 		public static byte[] HexStringToByteArray(string hexString)

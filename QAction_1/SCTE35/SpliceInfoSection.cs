@@ -96,7 +96,7 @@
 			}
 		}
 
-		public byte TablePid => GetValueFromField<byte>(STR_TableId);
+		public byte TableId => GetValueFromField<byte>(STR_TableId);
 
 		internal override void Initialize()
 		{
