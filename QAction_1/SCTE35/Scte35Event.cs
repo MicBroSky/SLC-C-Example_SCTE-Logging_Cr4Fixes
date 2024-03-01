@@ -10,23 +10,18 @@
 	public class Scte35Event
 	{
 		#region Fields
-
 		private static SpliceInfoSection spi;
 		private static List<SpliceDescriptor> descriptors;
 		private static TimeSignal timeSignal;
-
 		#endregion
 
 		#region Constructors
-
 		private Scte35Event()
 		{
 		}
-
 		#endregion
 
 		#region Public properties
-
 		public SpliceDescriptor[] Operations => descriptors.ToArray();
 
 		public double Pts => timeSignal.Pts;
@@ -36,11 +31,9 @@
 		public int TableId => Convert.ToInt32(spi.TableId);
 
 		public int ProtocolVersion => spi.ProtocolVersion;
-
 		#endregion
 
 		#region Methods
-
 		public static Scte35Event FromBytes(byte[] bytes)
 		{
 			var reader = new BitStream<ArrayByteStream>(new ArrayByteStream(bytes));
@@ -107,7 +100,6 @@
 
 			return bytes;
 		}
-
 		#endregion
 	}
 }
