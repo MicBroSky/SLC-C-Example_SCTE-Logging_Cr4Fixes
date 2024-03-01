@@ -64,7 +64,7 @@ Any inquiries can be addressed to:
 	</Compliancies>
 
 	<Params>
-		<Param id="1" trending="false" save="true">
+		<Param id="1" save="true">
 			<Name>lastPrimaryKey</Name>
 			<Description>description</Description>
 			<Type>read</Type>
@@ -76,14 +76,8 @@ Any inquiries can be addressed to:
 				<LengthType>next param</LengthType>
 				<DefaultValue>0</DefaultValue>
 			</Interprete>
-			<Display>
-				<RTDisplay>false</RTDisplay>
-			</Display>
-			<Measurement>
-				<Type>number</Type>
-			</Measurement>
 		</Param>
-		<Param id="9" trending="false">
+		<Param id="9">
 			<Name>ReadMe</Name>
 			<Description>Read Me</Description>
 			<Type>read</Type>
@@ -148,7 +142,6 @@ The table features the following columns:
 
 		<Param id="100">
 			<Name>FakeSctePageButton</Name>
-			<Description></Description>
 			<Type>write</Type>
 			<Interprete>
 				<RawType>other</RawType>
@@ -175,7 +168,7 @@ The table features the following columns:
 				</Discreets>
 			</Measurement>
 		</Param>
-		<Param id="101" trending="false">
+		<Param id="101">
 			<Name>FakeScteHexValue</Name>
 			<Description>Fake SCTE Hex Value</Description>
 			<Type>read</Type>
@@ -228,7 +221,7 @@ Fills part of the Source, Field 1, Field 2, Field 3, Field 4, and Object fields 
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="102" trending="false">
+		<Param id="102">
 			<Name>FakeScteStream</Name>
 			<Description>Fake SCTE Stream Value</Description>
 			<Type>read</Type>
@@ -282,7 +275,7 @@ It is usually the device's name from the DataMiner element.]]>
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="103" trending="false">
+		<Param id="103">
 			<Name>FakeScteProgram</Name>
 			<Description>Fake SCTE Program Value</Description>
 			<Type>read</Type>
@@ -335,7 +328,7 @@ Fills the "Program" field of the table.]]>
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="104" trending="false">
+		<Param id="104">
 			<Name>FakeScteOperationName</Name>
 			<Description>Fake SCTE Operation Name Value</Description>
 			<Type>read</Type>
@@ -388,14 +381,14 @@ It is a customized value and is generally "insert_segmentation_descriptor_reques
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="105" trending="false" save="true">
+		<Param id="105" save="true">
 			<Name>FakeScteIpAddress</Name>
 			<Description>Fake SCTE IP Address Value</Description>
 			<Type>read</Type>
 			<Information>
 				<Subtext>
 					<![CDATA[The IP address of the device where the SCTE command came from.
-It is usually the IP Address of the protocol.]]>
+It is usually the IP Address of the DataMiner element.]]>
 				</Subtext>
 			</Information>
 			<Interprete>
@@ -443,7 +436,6 @@ It is usually the IP Address of the protocol.]]>
 		</Param>
 		<Param id="199">
 			<Name>FakeScteButton</Name>
-			<Description></Description>
 			<Type>write</Type>
 			<Information>
 				<Subtext>Button allowing to fake an SCTE Event.</Subtext>
@@ -505,19 +497,19 @@ It is usually the IP Address of the protocol.]]>
 			<Description>SCTE Events</Description>
 			<Type>array</Type>
 			<ArrayOptions index="0" options=";database:1000">
-				<ColumnOption idx="0" pid="8000001" type="retrieved" options=""/>
-				<ColumnOption idx="1" pid="8000002" type="retrieved" options=""/>
-				<ColumnOption idx="2" pid="8000003" type="retrieved" options=""/>
-				<ColumnOption idx="3" pid="8000004" type="retrieved" options=""/>
-				<ColumnOption idx="4" pid="8000005" type="retrieved" options=""/>
-				<ColumnOption idx="5" pid="8000006" type="retrieved" options=""/>
-				<ColumnOption idx="6" pid="8000007" type="retrieved" options=""/>
-				<ColumnOption idx="7" pid="8000008" type="retrieved" options=""/>
-				<ColumnOption idx="8" pid="8000009" type="retrieved" options=""/>
-				<ColumnOption idx="9" pid="8000010" type="retrieved" options=""/>
-				<ColumnOption idx="10" pid="8000011" type="retrieved" options=""/>
-				<ColumnOption idx="11" pid="8000012" type="retrieved" options=""/>
-				<ColumnOption idx="12" pid="8000013" type="retrieved" options=""/>
+				<ColumnOption idx="0" pid="8000001" type="retrieved" />
+				<ColumnOption idx="1" pid="8000002" type="retrieved" />
+				<ColumnOption idx="2" pid="8000003" type="retrieved" />
+				<ColumnOption idx="3" pid="8000004" type="retrieved" />
+				<ColumnOption idx="4" pid="8000005" type="retrieved" />
+				<ColumnOption idx="5" pid="8000006" type="retrieved" />
+				<ColumnOption idx="6" pid="8000007" type="retrieved" />
+				<ColumnOption idx="7" pid="8000008" type="retrieved" />
+				<ColumnOption idx="8" pid="8000009" type="retrieved" />
+				<ColumnOption idx="9" pid="8000010" type="retrieved" />
+				<ColumnOption idx="10" pid="8000011" type="retrieved" />
+				<ColumnOption idx="11" pid="8000012" type="retrieved" />
+				<ColumnOption idx="12" pid="8000013" type="retrieved" />
 			</ArrayOptions>
 			<Database>
 				<IndexingOptions enabled="true"></IndexingOptions>
@@ -534,9 +526,9 @@ It is usually the IP Address of the protocol.]]>
 				<Type options="tab=lines:25,filter:true">table</Type>
 			</Measurement>
 		</Param>
-		<Param id="8000001" trending="false">
+		<Param id="8000001">
 			<Name>scte_key</Name>
-			<Description>Key [IDX] (SCTE Events)</Description>
+			<Description>Key (SCTE Events)</Description>
 			<Type>read</Type>
 			<Interprete>
 				<RawType>other</RawType>
@@ -598,7 +590,7 @@ It is usually the IP Address of the protocol.]]>
 				<Type>number</Type>
 			</Measurement>
 		</Param>
-		<Param id="8000004" trending="false">
+		<Param id="8000004">
 			<Name>scte_opname</Name>
 			<Description>Operation Name (SCTE Events)</Description>
 			<Type>read</Type>
@@ -617,7 +609,7 @@ It is usually the IP Address of the protocol.]]>
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="8000005" trending="false">
+		<Param id="8000005">
 			<Name>scte_src</Name>
 			<Description>Source (SCTE Events)</Description>
 			<Type>read</Type>
@@ -636,7 +628,7 @@ It is usually the IP Address of the protocol.]]>
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="8000006" trending="false">
+		<Param id="8000006">
 			<Name>scte_str</Name>
 			<Description>Stream (SCTE Events)</Description>
 			<Type>read</Type>
@@ -655,7 +647,7 @@ It is usually the IP Address of the protocol.]]>
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="8000007" trending="false">
+		<Param id="8000007">
 			<Name>scte_pgm</Name>
 			<Description>Program (SCTE Events)</Description>
 			<Type>read</Type>
@@ -674,7 +666,7 @@ It is usually the IP Address of the protocol.]]>
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="8000008" trending="false">
+		<Param id="8000008">
 			<Name>scte_obj</Name>
 			<Description>Object (SCTE Events)</Description>
 			<Type>read</Type>
@@ -693,7 +685,7 @@ It is usually the IP Address of the protocol.]]>
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="8000009" trending="false">
+		<Param id="8000009">
 			<Name>scte_segevntid</Name>
 			<Description>Segmentation Event ID (SCTE Events)</Description>
 			<Type>read</Type>
@@ -718,7 +710,7 @@ It is usually the IP Address of the protocol.]]>
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="8000010" trending="false">
+		<Param id="8000010">
 			<Name>scte_segupid</Name>
 			<Description>Segmentation UPID (SCTE Events)</Description>
 			<Type>read</Type>
@@ -743,7 +735,7 @@ It is usually the IP Address of the protocol.]]>
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="8000011" trending="false">
+		<Param id="8000011">
 			<Name>scte_segtypeid</Name>
 			<Description>Segmentation Type ID (SCTE Events)</Description>
 			<Type>read</Type>
@@ -768,7 +760,7 @@ It is usually the IP Address of the protocol.]]>
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="8000012" trending="false">
+		<Param id="8000012">
 			<Name>scte_segtypename</Name>
 			<Description>Segmentation Type Name (SCTE Events)</Description>
 			<Type>read</Type>
@@ -793,7 +785,7 @@ It is usually the IP Address of the protocol.]]>
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="8000013" trending="false">
+		<Param id="8000013">
 			<Name>scte_fld1</Name>
 			<Description>Field 1 (SCTE Events)</Description>
 			<Type>read</Type>
