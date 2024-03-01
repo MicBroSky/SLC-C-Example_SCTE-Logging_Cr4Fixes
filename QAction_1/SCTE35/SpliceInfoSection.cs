@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+
 	using Sewer56.BitStream;
 	using Sewer56.BitStream.ByteStreams;
 
@@ -95,7 +96,7 @@
 			}
 		}
 
-		public byte TableId => GetValueFromField<byte>(STR_TableId);
+		public byte TablePid => GetValueFromField<byte>(STR_TableId);
 
 		internal override void Initialize()
 		{

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using Sewer56.BitStream;
 using Sewer56.BitStream.ByteStreams;
+
 using Skyline.Protocol.SCTE35;
 
 public class TimeSignal : ScteBase

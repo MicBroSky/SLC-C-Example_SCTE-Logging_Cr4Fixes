@@ -33,7 +33,7 @@
 
 		public string SpliceCommand => spi.SpliceCommand;
 
-		public int TableId => Convert.ToInt32(spi.TableId);
+		public int TablePid => Convert.ToInt32(spi.TablePid);
 
 		public int ProtocolVersion => spi.ProtocolVersion;
 
