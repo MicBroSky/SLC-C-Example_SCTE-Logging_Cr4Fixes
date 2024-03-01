@@ -43,7 +43,7 @@ public class TimeSignal : ScteBase
 		{
 			hasPts = true;
 			readerTest.SeekRelative(0, 6);
-			Fields[STR_PTS] = readerTest.Read<long>(33) / 90000;
+			Fields[STR_PTS] = readerTest.Read<long>(33) / 90_000;
 		}
 		else
 		{

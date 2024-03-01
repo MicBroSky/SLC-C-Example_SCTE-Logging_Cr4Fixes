@@ -31,7 +31,7 @@ namespace Skyline.Protocol.SCTE.ContextMenu
 					break;
 
 				case Action.DeleteSelectedEvents:
-					Protocol.DeleteRow(Parameter.Scte.tablePid, this.Data);
+					Protocol.DeleteRow(Parameter.Scte.tablePid, Data);
 					break;
 
 				default:
