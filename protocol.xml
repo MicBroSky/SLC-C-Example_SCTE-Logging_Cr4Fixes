@@ -388,7 +388,7 @@ It is a customized value and is generally "insert_segmentation_descriptor_reques
 			<Information>
 				<Subtext>
 					<![CDATA[The IP address of the device where the SCTE command came from.
-It is usually the IP Address of the DataMiner element.]]>
+It is usually the IP Address of the protocol.]]>
 				</Subtext>
 			</Information>
 			<Interprete>
