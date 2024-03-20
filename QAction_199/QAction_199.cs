@@ -34,9 +34,9 @@ public static class QAction
 			string ip = Convert.ToString(values[4]);
 			int primaryKey = Convert.ToInt32(values[5]);
 
-			List<object[]> rows = new List<object[]>();
-
 			Scte35Event scte = Scte35Event.FromHex(hexString);
+			List<object[]> rows = new List<object[]>(scte.Operations.Length);
+
 			foreach (SpliceDescriptor operation in scte.Operations)
 			{
 				if (ip.Contains("."))

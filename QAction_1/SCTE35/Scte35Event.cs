@@ -3,39 +3,39 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Globalization;
-
 	using Sewer56.BitStream;
 	using Sewer56.BitStream.ByteStreams;
 
 	public class Scte35Event
 	{
-		#region Fields
-
-		private static SpliceInfoSection spi;
-		private static List<SpliceDescriptor> descriptors;
-		private static TimeSignal timeSignal;
-
-		#endregion
-
 		#region Constructors
 
 		private Scte35Event()
 		{
 		}
 
+		private Scte35Event(SpliceInfoSection spi, List<SpliceDescriptor> descriptors, TimeSignal timeSignal)
+		{
+			Operations = descriptors.ToArray();
+			Pts = timeSignal.Pts;
+			SpliceCommand = spi.SpliceCommand;
+			TableId = Convert.ToInt32(spi.TableId);
+			ProtocolVersion = spi.ProtocolVersion;
+		}
+
 		#endregion
 
 		#region Public properties
 
-		public SpliceDescriptor[] Operations => descriptors.ToArray();
+		public SpliceDescriptor[] Operations { get; private set; }
 
-		public double Pts => timeSignal.Pts;
+		public double Pts { get; private set; }
 
-		public string SpliceCommand => spi.SpliceCommand;
+		public string SpliceCommand { get; private set; }
 
-		public int TableId => Convert.ToInt32(spi.TableId);
+		public int TableId { get; private set; }
 
-		public int ProtocolVersion => spi.ProtocolVersion;
+		public int ProtocolVersion { get; private set; }
 
 		#endregion
 
@@ -45,7 +45,7 @@
 		{
 			var reader = new BitStream<ArrayByteStream>(new ArrayByteStream(HexStringToByteArray(hex)));
 
-			spi = new SpliceInfoSection(reader);
+			var spi = new SpliceInfoSection(reader);
 
 			if (!spi.IsOk)
 			{
@@ -57,7 +57,7 @@
 				return new Scte35Event();
 			}
 
-			timeSignal = new TimeSignal(spi.Reader);
+			var timeSignal = new TimeSignal(spi.Reader);
 
 			if (!timeSignal.IsLoaded)
 			{
@@ -74,7 +74,7 @@
 			}
 
 			// Loop to read the descriptors in this packet
-			descriptors = new List<SpliceDescriptor>();
+			var descriptors = new List<SpliceDescriptor>();
 			var updatedReader = timeSignal.Reader;
 
 			while (descriptor_length > 10)
@@ -86,7 +86,7 @@
 				updatedReader = spd.Reader;
 			}
 
-			return new Scte35Event();
+			return new Scte35Event(spi,descriptors,timeSignal);
 		}
 
 		public static byte[] HexStringToByteArray(string hexString)
