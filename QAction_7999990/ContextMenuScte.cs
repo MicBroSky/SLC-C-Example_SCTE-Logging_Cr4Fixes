@@ -31,12 +31,12 @@ namespace Skyline.Protocol.SCTE.ContextMenu
 					break;
 
 				case Action.DeleteSelectedEvents:
-					Protocol.DeleteRow(Parameter.Scte.tablePid, Data);
+					Protocol.DeleteRow(Parameter.Scte.tablePid, this.Data);
 					break;
 
 				default:
 					Protocol.Log(
-						$"QA{Protocol.QActionID}|ContextMenuscte|Process|Unexpected ContextMenu value '{ActionRaw}'",
+						"QA" + Protocol.QActionID + "|ContextMenuscte|Process|Unexpected ContextMenu value '" + ActionRaw + "'",
 						LogType.Error,
 						LogLevel.NoLogging);
 					break;

@@ -2,7 +2,7 @@
 <!--
 
 ****************************************************************************
-*  Copyright (c) 2024,  Skyline Communications NV  All Rights Reserved.    *
+*  Copyright (c) 2022,  Skyline Communications NV  All Rights Reserved.    *
 ****************************************************************************
 
 By using this driver, you expressly agree with the usage terms and
@@ -30,6 +30,7 @@ or in part, directly or indirectly to any person, entity, organization
 or administration without the prior written consent of
 Skyline Communications.
 
+
 Any inquiries can be addressed to:
 
 	Skyline Communications NV
@@ -45,26 +46,26 @@ Any inquiries can be addressed to:
 -->
 
 <Protocol xmlns="http://www.skyline.be/protocol">
-	<Name>Skyline Example SCTE Logging</Name>
-	<Description>Skyline Example SCTE Logging DataMiner connector</Description>
+	<Name>SLC SDF SCTE Logging</Name>
+	<Description>SLC SDF SCTE Logging DataMiner driver</Description>
 	<Version>1.0.0.1</Version>
-	<IntegrationID>DMS-DRV-9036</IntegrationID>
+	<IntegrationID>DMS-DRV-0001</IntegrationID>
 	<Provider>Skyline Communications</Provider>
-	<Vendor>Skyline Example</Vendor>
-	<VendorOID>1.3.6.1.4.1.8813.2.1218</VendorOID>
-	<DeviceOID>13</DeviceOID>
-	<ElementType>Example</ElementType>
+	<Vendor>Skyline</Vendor>
+	<VendorOID>1.3.6.1.4.1.8813.2.1</VendorOID>
+	<DeviceOID>1</DeviceOID>
+	<ElementType>Demo</ElementType>
 	<Type relativeTimers="true">virtual</Type>
-	<Display defaultPage="General" pageOrder="General"/>
+	<Display defaultPage="General" pageOrder="General" wideColumnPages="General"/>
 	<SNMP includepages="true">auto</SNMP>
 
 	<Compliancies>
 		<CassandraReady>true</CassandraReady>
-		<MinimumRequiredVersion>10.1.0.0 - 9966</MinimumRequiredVersion>
+		<MinimumRequiredVersion>10.0.10.0 - 9454</MinimumRequiredVersion>
 	</Compliancies>
 
 	<Params>
-		<Param id="1" save="true">
+		<Param id="1" trending="false" save="true">
 			<Name>lastPrimaryKey</Name>
 			<Description>description</Description>
 			<Type>read</Type>
@@ -76,8 +77,14 @@ Any inquiries can be addressed to:
 				<LengthType>next param</LengthType>
 				<DefaultValue>0</DefaultValue>
 			</Interprete>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
 		</Param>
-		<Param id="9">
+		<Param id="9" trending="false">
 			<Name>ReadMe</Name>
 			<Description>Read Me</Description>
 			<Type>read</Type>
@@ -139,9 +146,9 @@ The table features the following columns:
 				<Type lines="20">string</Type>
 			</Measurement>
 		</Param>
-
 		<Param id="100">
 			<Name>FakeSctePageButton</Name>
+			<Description></Description>
 			<Type>write</Type>
 			<Interprete>
 				<RawType>other</RawType>
@@ -168,7 +175,7 @@ The table features the following columns:
 				</Discreets>
 			</Measurement>
 		</Param>
-		<Param id="101">
+		<Param id="101" trending="false">
 			<Name>FakeScteHexValue</Name>
 			<Description>Fake SCTE Hex Value</Description>
 			<Type>read</Type>
@@ -221,7 +228,7 @@ Fills part of the Source, Field 1, Field 2, Field 3, Field 4, and Object fields 
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="102">
+		<Param id="102" trending="false">
 			<Name>FakeScteStream</Name>
 			<Description>Fake SCTE Stream Value</Description>
 			<Type>read</Type>
@@ -275,7 +282,7 @@ It is usually the device's name from the DataMiner element.]]>
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="103">
+		<Param id="103" trending="false">
 			<Name>FakeScteProgram</Name>
 			<Description>Fake SCTE Program Value</Description>
 			<Type>read</Type>
@@ -328,7 +335,7 @@ Fills the "Program" field of the table.]]>
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="104">
+		<Param id="104" trending="false">
 			<Name>FakeScteOperationName</Name>
 			<Description>Fake SCTE Operation Name Value</Description>
 			<Type>read</Type>
@@ -381,7 +388,7 @@ It is a customized value and is generally "insert_segmentation_descriptor_reques
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="105" save="true">
+		<Param id="105" trending="false" save="true">
 			<Name>FakeScteIpAddress</Name>
 			<Description>Fake SCTE IP Address Value</Description>
 			<Type>read</Type>
@@ -436,6 +443,7 @@ It is usually the IP Address of the protocol.]]>
 		</Param>
 		<Param id="199">
 			<Name>FakeScteButton</Name>
+			<Description></Description>
 			<Type>write</Type>
 			<Information>
 				<Subtext>Button allowing to fake an SCTE Event.</Subtext>
@@ -465,7 +473,7 @@ It is usually the IP Address of the protocol.]]>
 				</Discreets>
 			</Measurement>
 		</Param>
-
+		
 		<Param id="7999990">
 			<Name>scte_ContextMenu</Name>
 			<Description>Context Menu for SCTE Events</Description>
@@ -497,19 +505,19 @@ It is usually the IP Address of the protocol.]]>
 			<Description>SCTE Events</Description>
 			<Type>array</Type>
 			<ArrayOptions index="0" options=";database:1000">
-				<ColumnOption idx="0" pid="8000001" type="retrieved" />
-				<ColumnOption idx="1" pid="8000002" type="retrieved" />
-				<ColumnOption idx="2" pid="8000003" type="retrieved" />
-				<ColumnOption idx="3" pid="8000004" type="retrieved" />
-				<ColumnOption idx="4" pid="8000005" type="retrieved" />
-				<ColumnOption idx="5" pid="8000006" type="retrieved" />
-				<ColumnOption idx="6" pid="8000007" type="retrieved" />
-				<ColumnOption idx="7" pid="8000008" type="retrieved" />
-				<ColumnOption idx="8" pid="8000009" type="retrieved" />
-				<ColumnOption idx="9" pid="8000010" type="retrieved" />
-				<ColumnOption idx="10" pid="8000011" type="retrieved" />
-				<ColumnOption idx="11" pid="8000012" type="retrieved" />
-				<ColumnOption idx="12" pid="8000013" type="retrieved" />
+				<ColumnOption idx="0" pid="8000001" type="retrieved" options=""/>
+				<ColumnOption idx="1" pid="8000002" type="retrieved" options=""/>
+				<ColumnOption idx="2" pid="8000003" type="retrieved" options=""/>
+				<ColumnOption idx="3" pid="8000004" type="retrieved" options=""/>
+				<ColumnOption idx="4" pid="8000005" type="retrieved" options=""/>
+				<ColumnOption idx="5" pid="8000006" type="retrieved" options=""/>
+				<ColumnOption idx="6" pid="8000007" type="retrieved" options=""/>
+				<ColumnOption idx="7" pid="8000008" type="retrieved" options=""/>
+				<ColumnOption idx="8" pid="8000009" type="retrieved" options=""/>
+				<ColumnOption idx="9" pid="8000010" type="retrieved" options=""/>
+				<ColumnOption idx="10" pid="8000011" type="retrieved" options=""/>
+				<ColumnOption idx="11" pid="8000012" type="retrieved" options=""/>
+				<ColumnOption idx="12" pid="8000013" type="retrieved" options=""/>
 			</ArrayOptions>
 			<Database>
 				<IndexingOptions enabled="true"></IndexingOptions>
@@ -526,9 +534,9 @@ It is usually the IP Address of the protocol.]]>
 				<Type options="tab=lines:25,filter:true">table</Type>
 			</Measurement>
 		</Param>
-		<Param id="8000001">
+		<Param id="8000001" trending="false">
 			<Name>scte_key</Name>
-			<Description>Key (SCTE Events)</Description>
+			<Description>Key [IDX] (SCTE Events)</Description>
 			<Type>read</Type>
 			<Interprete>
 				<RawType>other</RawType>
@@ -590,7 +598,7 @@ It is usually the IP Address of the protocol.]]>
 				<Type>number</Type>
 			</Measurement>
 		</Param>
-		<Param id="8000004">
+		<Param id="8000004" trending="false">
 			<Name>scte_opname</Name>
 			<Description>Operation Name (SCTE Events)</Description>
 			<Type>read</Type>
@@ -609,7 +617,7 @@ It is usually the IP Address of the protocol.]]>
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="8000005">
+		<Param id="8000005" trending="false">
 			<Name>scte_src</Name>
 			<Description>Source (SCTE Events)</Description>
 			<Type>read</Type>
@@ -628,7 +636,7 @@ It is usually the IP Address of the protocol.]]>
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="8000006">
+		<Param id="8000006" trending="false">
 			<Name>scte_str</Name>
 			<Description>Stream (SCTE Events)</Description>
 			<Type>read</Type>
@@ -647,7 +655,7 @@ It is usually the IP Address of the protocol.]]>
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="8000007">
+		<Param id="8000007" trending="false">
 			<Name>scte_pgm</Name>
 			<Description>Program (SCTE Events)</Description>
 			<Type>read</Type>
@@ -666,7 +674,7 @@ It is usually the IP Address of the protocol.]]>
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="8000008">
+		<Param id="8000008" trending="false">
 			<Name>scte_obj</Name>
 			<Description>Object (SCTE Events)</Description>
 			<Type>read</Type>
@@ -685,7 +693,7 @@ It is usually the IP Address of the protocol.]]>
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="8000009">
+		<Param id="8000009" trending="false">
 			<Name>scte_segevntid</Name>
 			<Description>Segmentation Event ID (SCTE Events)</Description>
 			<Type>read</Type>
@@ -710,7 +718,7 @@ It is usually the IP Address of the protocol.]]>
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="8000010">
+		<Param id="8000010" trending="false">
 			<Name>scte_segupid</Name>
 			<Description>Segmentation UPID (SCTE Events)</Description>
 			<Type>read</Type>
@@ -735,7 +743,7 @@ It is usually the IP Address of the protocol.]]>
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="8000011">
+		<Param id="8000011" trending="false">
 			<Name>scte_segtypeid</Name>
 			<Description>Segmentation Type ID (SCTE Events)</Description>
 			<Type>read</Type>
@@ -760,7 +768,7 @@ It is usually the IP Address of the protocol.]]>
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="8000012">
+		<Param id="8000012" trending="false">
 			<Name>scte_segtypename</Name>
 			<Description>Segmentation Type Name (SCTE Events)</Description>
 			<Type>read</Type>
@@ -785,7 +793,7 @@ It is usually the IP Address of the protocol.]]>
 				<Type>string</Type>
 			</Measurement>
 		</Param>
-		<Param id="8000013">
+		<Param id="8000013" trending="false">
 			<Name>scte_fld1</Name>
 			<Description>Field 1 (SCTE Events)</Description>
 			<Type>read</Type>
@@ -819,6 +827,18 @@ It is usually the IP Address of the protocol.]]>
 
 		<QAction id="7999990" name="SCTE Events - ContextMenu" encoding="csharp" triggers="7999990" />
 	</QActions>
+
+	<Groups>
+	</Groups>
+
+	<Triggers>
+	</Triggers>
+
+	<Actions>
+	</Actions>
+
+	<Timers>
+	</Timers>
 
 	<VersionHistory>
 		<Branches>

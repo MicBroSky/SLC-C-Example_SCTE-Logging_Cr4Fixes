@@ -94,29 +94,35 @@
 
 		#region Public properties
 
-		public bool ArchiveAllowedFlag => GetValueFromField<bool>(STR_ArchiveAllowedFlag);
+		public int Length => GetValueFromField<int>(STR_DescriptorLength);
 
-		public bool DeliveryNotRestrictedFlag => GetValueFromField<bool>(STR_DeliveryNotRestrictedFlag);
-
-		public int DeviceRestrictions => GetValueFromField<int>(STR_DeviceRestrictions);
+		public string Upid => GetValueFromField<string>(STR_SegmentationUpid);
 
 		public int EventID => GetValueFromField<int>(STR_SegmentationEventId);
 
-		public int Length => GetValueFromField<int>(STR_DescriptorLength);
+		public byte SegmentationType => GetValueFromField<byte>(STR_SegmentationTypeId);
+
+		public bool WebDeliveryAllowedFlag => GetValueFromField<bool>(STR_WebDeliveryAllowedFlag);
 
 		public bool NoRegionalBlackoutFlag => GetValueFromField<bool>(STR_NoRegionalBlackoutFlag);
 
-		public long SegmentationDuration => GetValueFromField<long>(STR_SegmentationDuration);
-
 		public bool SegmentationEventCancelIndicator => GetValueFromField<bool>(STR_SegmentationEventCancelIndicator);
 
-		public int SegmentationEventId => GetValueFromField<int>(STR_SegmentationEventId);
+		public bool DeliveryNotRestrictedFlag => GetValueFromField<bool>(STR_DeliveryNotRestrictedFlag);
 
-		public int SegmentationExpected => GetValueFromField<int>(STR_SegmentationExpected);
+		public bool ArchiveAllowedFlag => GetValueFromField<bool>(STR_ArchiveAllowedFlag);
 
 		public int SegmentationNum => GetValueFromField<int>(STR_SegmentationNum);
 
-		public byte SegmentationType => GetValueFromField<byte>(STR_SegmentationTypeId);
+		public int SegmentationExpected => GetValueFromField<int>(STR_SegmentationExpected);
+
+		public long SegmentationDuration => GetValueFromField<long>(STR_SegmentationDuration);
+
+		public int SegmentationUpidType => GetValueFromField<byte>(STR_SegmentationUpidType);
+
+		public int SegmentationEventId => GetValueFromField<int>(STR_SegmentationEventId);
+
+		public int DeviceRestrictions => GetValueFromField<int>(STR_DeviceRestrictions);
 
 		public string SegmentationTypeName
 		{
@@ -130,12 +136,6 @@
 				return $"Unknown type {SegmentationType}";
 			}
 		}
-
-		public string SegmentationUpid => GetValueFromField<string>(STR_SegmentationUpid);
-
-		public int SegmentationUpidType => GetValueFromField<byte>(STR_SegmentationUpidType);
-
-		public bool WebDeliveryAllowedFlag => GetValueFromField<bool>(STR_WebDeliveryAllowedFlag);
 
 		#endregion
 

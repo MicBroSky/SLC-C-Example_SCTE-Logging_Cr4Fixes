@@ -2,7 +2,6 @@
 {
 	using System;
 	using System.Collections.Generic;
-
 	using Sewer56.BitStream;
 	using Sewer56.BitStream.ByteStreams;
 

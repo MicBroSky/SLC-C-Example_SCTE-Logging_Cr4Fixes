@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using Sewer56.BitStream;
 using Sewer56.BitStream.ByteStreams;
-
 using Skyline.Protocol.SCTE35;
 
 public class TimeSignal : ScteBase
@@ -43,7 +41,7 @@ public class TimeSignal : ScteBase
 		{
 			hasPts = true;
 			readerTest.SeekRelative(0, 6);
-			Fields[STR_PTS] = readerTest.Read<long>(33) / 90_000;
+			Fields[STR_PTS] = readerTest.Read<long>(33) / 90000;
 		}
 		else
 		{
