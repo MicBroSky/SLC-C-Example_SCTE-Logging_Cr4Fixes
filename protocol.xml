@@ -120,7 +120,7 @@ The table features the following columns:
 			-scte_segevntid (Segmentation Event ID)
 				A segmentation event identifier.
 			-scte_segupid (Segmentation UPID) 
-				The Unique Program Identifier for the SCTE Event.
+				The Unique Program Identifier for the SCTE Event. It is separated by a '_' where the first part shows the service it came from through a string and the second part just being an unique ID. Ex: "telemundo_EPOO1825960702"
 			-scte_segtypeid (Segmentation Type ID) 
 				An ID that corresponds to the type of starting or ending event being used.
 			-scte_segtypename (Segmenttion Type Name)
