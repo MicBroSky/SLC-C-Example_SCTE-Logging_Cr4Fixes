@@ -58,12 +58,10 @@ Any inquiries can be addressed to:
 	<Type relativeTimers="true">virtual</Type>
 	<Display defaultPage="General" pageOrder="General" wideColumnPages="General"/>
 	<SNMP includepages="true">auto</SNMP>
-
 	<Compliancies>
 		<CassandraReady>true</CassandraReady>
 		<MinimumRequiredVersion>10.0.10.0 - 9454</MinimumRequiredVersion>
 	</Compliancies>
-
 	<Params>
 		<Param id="1" trending="false" save="true">
 			<Name>lastPrimaryKey</Name>

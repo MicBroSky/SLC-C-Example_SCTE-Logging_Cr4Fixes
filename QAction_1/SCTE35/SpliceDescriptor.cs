@@ -96,7 +96,7 @@
 
 		public int Length => GetValueFromField<int>(STR_DescriptorLength);
 
-		public string Upid => GetValueFromField<string>(STR_SegmentationUpid);
+		public string SegmentationUpid => GetValueFromField<string>(STR_SegmentationUpid);
 
 		public int EventID => GetValueFromField<int>(STR_SegmentationEventId);
 
@@ -186,17 +186,17 @@
 						throw new FieldReadException("Couldn't read component_count from reader");
 					}
 
-					var components = new List<Tuple<int, long>>();
+					var components = new Tuple<int, long>[compCount];
 					for (int i = 0; i < compCount; i++)
 					{
 						int compTag = readerTest.Read<int>(8);
 
 						readerTest.SeekRelative(0, 7);
 						long compPTS = readerTest.Read<long>(33);
-						components.Add(new Tuple<int, long>(compTag, compPTS));
+						components[i] = new Tuple<int, long>(compTag, compPTS);
 					}
 
-					Fields[STR_Components] = components.ToArray();
+					Fields[STR_Components] = components;
 				}
 
 				if (GetValueFromField<bool>(STR_SegmentationDurationFlag))
