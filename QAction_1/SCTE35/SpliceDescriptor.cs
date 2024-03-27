@@ -96,7 +96,6 @@
 
 		public int Length => GetValueFromField<int>(STR_DescriptorLength);
 
-		public string SegmentationUpid => GetValueFromField<string>(STR_SegmentationUpid);
 
 		public int EventID => GetValueFromField<int>(STR_SegmentationEventId);
 
@@ -117,6 +116,8 @@
 		public int SegmentationExpected => GetValueFromField<int>(STR_SegmentationExpected);
 
 		public long SegmentationDuration => GetValueFromField<long>(STR_SegmentationDuration);
+
+		public string SegmentationUpid => GetValueFromField<string>(STR_SegmentationUpid);
 
 		public int SegmentationUpidType => GetValueFromField<byte>(STR_SegmentationUpidType);
 
@@ -143,44 +144,42 @@
 
 		internal override void Initialize()
 		{
-			var readerTest = Reader;
-
 			Fields = new Dictionary<string, object>
 			{
-				[STR_SpliceDescriptorTag] = readerTest.Read<byte>(),
-				[STR_DescriptorLength] = readerTest.Read<int>(8),
-				[STR_Identifier] = readerTest.Read<int>(), // This should be a string with 4 characters and value CUEI
-				[STR_SegmentationEventId] = readerTest.Read<int>(),
-				[STR_SegmentationEventCancelIndicator] = Convert.ToBoolean(readerTest.ReadBit()),
+				[STR_SpliceDescriptorTag] = Reader.Read<byte>(),
+				[STR_DescriptorLength] = Reader.Read<int>(8),
+				[STR_Identifier] = Reader.Read<int>(), // This should be a string with 4 characters and value CUEI
+				[STR_SegmentationEventId] = Reader.Read<int>(),
+				[STR_SegmentationEventCancelIndicator] = Convert.ToBoolean(Reader.ReadBit()),
 			};
 
-			readerTest.SeekRelative(0, 7);
+			Reader.SeekRelative(0, 7);
 
 			// We should have all the fields loaded up to here; otherwise we got a reader error
 			IsLoadedCheck("Couldn't read the header for a splice descriptor");
 
 			if (!GetValueFromField<bool>(STR_SegmentationEventCancelIndicator))
 			{
-				Fields[STR_ProgramSegmentationFlag] = Convert.ToBoolean(readerTest.ReadBit());
-				Fields[STR_SegmentationDurationFlag] = Convert.ToBoolean(readerTest.ReadBit());
-				Fields[STR_DeliveryNotRestrictedFlag] = Convert.ToBoolean(readerTest.ReadBit());
+				Fields[STR_ProgramSegmentationFlag] = Convert.ToBoolean(Reader.ReadBit());
+				Fields[STR_SegmentationDurationFlag] = Convert.ToBoolean(Reader.ReadBit());
+				Fields[STR_DeliveryNotRestrictedFlag] = Convert.ToBoolean(Reader.ReadBit());
 				IsLoadedCheck("Couldn't read the segmentation flags");
 
 				if (!GetValueFromField<bool>(STR_DeliveryNotRestrictedFlag))
 				{
-					Fields[STR_WebDeliveryAllowedFlag] = Convert.ToBoolean(readerTest.ReadBit());
-					Fields[STR_NoRegionalBlackoutFlag] = Convert.ToBoolean(readerTest.ReadBit());
-					Fields[STR_ArchiveAllowedFlag] = Convert.ToBoolean(readerTest.ReadBit());
-					Fields[STR_DeviceRestrictions] = readerTest.Read<int>(2);
+					Fields[STR_WebDeliveryAllowedFlag] = Convert.ToBoolean(Reader.ReadBit());
+					Fields[STR_NoRegionalBlackoutFlag] = Convert.ToBoolean(Reader.ReadBit());
+					Fields[STR_ArchiveAllowedFlag] = Convert.ToBoolean(Reader.ReadBit());
+					Fields[STR_DeviceRestrictions] = Reader.Read<int>(2);
 				}
 				else
 				{
-					readerTest.SeekRelative(0, 5);
+					Reader.SeekRelative(0, 5);
 				}
 
 				if (!GetValueFromField<bool>(STR_ProgramSegmentationFlag))
 				{
-					int compCount = readerTest.Read<int>(8);
+					int compCount = Reader.Read<int>(8);
 					if (compCount < 0)
 					{
 						throw new FieldReadException("Couldn't read component_count from reader");
@@ -189,10 +188,10 @@
 					var components = new Tuple<int, long>[compCount];
 					for (int i = 0; i < compCount; i++)
 					{
-						int compTag = readerTest.Read<int>(8);
+						int compTag = Reader.Read<int>(8);
 
-						readerTest.SeekRelative(0, 7);
-						long compPTS = readerTest.Read<long>(33);
+						Reader.SeekRelative(0, 7);
+						long compPTS = Reader.Read<long>(33);
 						components[i] = new Tuple<int, long>(compTag, compPTS);
 					}
 
@@ -201,25 +200,23 @@
 
 				if (GetValueFromField<bool>(STR_SegmentationDurationFlag))
 				{
-					Fields[STR_SegmentationDuration] = readerTest.Read<long>(40);
+					Fields[STR_SegmentationDuration] = Reader.Read<long>(40);
 				}
 
-				Fields[STR_SegmentationUpidType] = readerTest.Read<byte>();
-				Fields[STR_SegmentationUpidLength] = readerTest.Read<int>(8);
+				Fields[STR_SegmentationUpidType] = Reader.Read<byte>();
+				Fields[STR_SegmentationUpidLength] = Reader.Read<int>(8);
 				IsLoadedCheck("Couldn't read the components or the UPIUD header");
 
 				int count = GetValueFromField<int>(STR_SegmentationUpidLength);
 				if (count > 0)
 				{
-					var bytes = new List<byte>();
+					byte[] content = new byte[count];
 
 					for (int i = 0; i < count; i++)
 					{
-						byte byteValue = (byte)readerTest.Read<long>(8);
-						bytes.Add(byteValue);
+						byte byteValue = (byte)Reader.Read<long>(8);
+						content[i] = byteValue;
 					}
-
-					byte[] content = bytes.ToArray();
 
 					Fields[STR_SegmentationUpid] = Encoding.UTF8.GetString(content);
 				}
@@ -228,20 +225,18 @@
 					Fields[STR_SegmentationUpid] = String.Empty;
 				}
 
-				Fields[STR_SegmentationTypeId] = (byte)readerTest.Read<long>(8);
-				Fields[STR_SegmentationNum] = readerTest.Read<int>(8);
-				Fields[STR_SegmentationExpected] = readerTest.Read<int>(8);
+				Fields[STR_SegmentationTypeId] = (byte)Reader.Read<long>(8);
+				Fields[STR_SegmentationNum] = Reader.Read<int>(8);
+				Fields[STR_SegmentationExpected] = Reader.Read<int>(8);
 				IsLoadedCheck("Couldn't read the segmentation type information");
 
 				byte segType = GetValueFromField<byte>(STR_SegmentationTypeId);
 				if (segType == 0x34 || segType == 0x36 || segType == 0x38 || segType == 0x3a)
 				{
-					Fields[STR_SubSegmentNum] = readerTest.Read<int>(8);
-					Fields[STR_SubSegmentsExpected] = readerTest.Read<int>(8);
+					Fields[STR_SubSegmentNum] = Reader.Read<int>(8);
+					Fields[STR_SubSegmentsExpected] = Reader.Read<int>(8);
 				}
 			}
-
-			Reader = readerTest;
 		}
 
 		private void IsLoadedCheck(string message)

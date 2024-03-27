@@ -502,7 +502,7 @@ It is usually the device IP Address of the element.]]>
 			<Name>scte</Name>
 			<Description>SCTE Events</Description>
 			<Type>array</Type>
-			<ArrayOptions index="0" options=";database:1000">
+			<ArrayOptions index="0" options=";database:1000;volatile">
 				<ColumnOption idx="0" pid="8000001" type="retrieved" options=""/>
 				<ColumnOption idx="1" pid="8000002" type="retrieved" options=""/>
 				<ColumnOption idx="2" pid="8000003" type="retrieved" options=""/>

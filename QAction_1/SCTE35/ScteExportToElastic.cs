@@ -50,7 +50,7 @@
 			}
 
 			protocol.SetParameter(Parameter.lastprimarykey, primaryKey);
-			protocol.FillArray(Parameter.Scte.tablePid, rows, NotifyProtocol.SaveOption.Partial);
+			protocol.FillArray(Parameter.Scte.tablePid, rows);
 		}
 
 		/// <summary>
