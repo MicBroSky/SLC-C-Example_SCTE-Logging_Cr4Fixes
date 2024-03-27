@@ -41,6 +41,11 @@
 
 		#region Methods
 
+		/// <summary>
+		/// Parses a SCTE Hexadecimal string to get its values.
+		/// </summary>
+		/// <param name="hex">The SCTE hexadecimal string.</param>
+		/// <returns>The SCTE 35 Event values.</returns>
 		public static Scte35Event FromHex(string hex)
 		{
 			var reader = new BitStream<ArrayByteStream>(new ArrayByteStream(HexStringToByteArray(hex)));
@@ -89,6 +94,11 @@
 			return new Scte35Event(spi,descriptors,timeSignal);
 		}
 
+		/// <summary>
+		/// Convert a SCTE Hexadecimals string into a byte array.
+		/// </summary>
+		/// <param name="hexString">The SCTE hexadecimal string.</param>
+		/// <returns> an array of bytes based on the hexadecimal string.</returns>
 		public static byte[] HexStringToByteArray(string hexString)
 		{
 			byte[] bytes = new byte[(hexString.Length - 2) / 2];
