@@ -8,48 +8,60 @@
 	using Skyline.Protocol.SCTE35;
 	using Formatting = Newtonsoft.Json.Formatting;
 
-	public class ScteExportToElastic
+	public class ScteExporter
 	{
+
+		public class AdditionalScteCells
+		{
+			public string OperationID { get; set; } = "-1";
+
+			public string Name { get; set; }
+
+			public string Program { get; set; }
+
+			public string OperatorName { get; set; }
+
+			public string IP { get; set; }
+
+			public long PrimaryKey { get; set; }
+
+			public string Field1 { get; set; } = string.Empty;
+		}
+
 		/// <summary>
 		/// Fills the SCTE information into the elastic database.
 		/// </summary>
 		/// <param name="protocol">The protocol.</param>
 		/// <param name="scte">The scte.</param>
-		/// <param name="operationID">The operation identifier.</param>
-		/// <param name="name">The name.</param>
-		/// <param name="program">The program.</param>
-		/// <param name="operatorName">Name of the operator.</param>
-		/// <param name="ip">The ip.</param>
-		/// <param name="primaryKey">The primary key.</param>
-		/// <param name="field1">The field1.</param>
-		public static void FillScteIntoElastic(SLProtocol protocol, Scte35Event scte, string operationID, string name, string program, string operatorName, string ip, int primaryKey, string field1)
+		/// <param name="scteCells">A class that storse all the additional SCTE cells that can be filled in for the table.</param>
+		public static void OffloadingToIndexingDatabase(SLProtocol protocol, Scte35Event scte, AdditionalScteCells scteCells)
 		{
-			ip = IpAddressFormatTest(ip);
+			scteCells.IP = IpAddressFormatTest(scteCells.IP);
 			List<object[]> rows = new List<object[]>(scte.Operations.Length);
 
 			foreach (SpliceDescriptor operation in scte.Operations)
 			{
 				ScteQActionRow elasticRow = new ScteQActionRow
 				{
-					Scte_key_8000001 = primaryKey,
+					Scte_key_8000001 = scteCells.PrimaryKey,
 					Scte_ts_8000002 = scte.Pts,
-					Scte_opid_8000003 = operationID,
-					Scte_opname_8000004 = operatorName,
-					Scte_src_8000005 = operation.SegmentationUpid.Split('_')[0] + ":" + ip,
-					Scte_str_8000006 = name,
-					Scte_pgm_8000007 = program,
+					Scte_opid_8000003 = scteCells.OperationID,
+					Scte_opname_8000004 = scteCells.OperatorName,
+					Scte_src_8000005 = operation.SegmentationUpid.Split('_')[0] + ":" + scteCells.IP,
+					Scte_str_8000006 = scteCells.Name,
+					Scte_pgm_8000007 = scteCells.Program,
 					Scte_obj_8000008 = JsonConvert.SerializeObject(scte, Formatting.None),
 					Scte_segevntid_8000009 = operation.EventID,
 					Scte_segupid_8000010 = operation.SegmentationUpid,
 					Scte_segtypeid_8000011 = operation.SegmentationType,
 					Scte_segtypename_8000012 = operation.SegmentationTypeName,
-					Scte_fld1_8000013 = field1,
+					Scte_fld1_8000013 = scteCells.Field1,
 				};
-				primaryKey++;
+				scteCells.PrimaryKey++;
 				rows.Add(elasticRow.ToObjectArray());
 			}
 
-			protocol.SetParameter(Parameter.lastprimarykey, primaryKey);
+			protocol.SetParameter(Parameter.lastprimarykey, scteCells.PrimaryKey);
 			protocol.FillArray(Parameter.Scte.tablePid, rows);
 		}
 

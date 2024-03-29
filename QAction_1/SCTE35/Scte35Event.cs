@@ -99,7 +99,7 @@
 		/// </summary>
 		/// <param name="hexString">The SCTE hexadecimal string.</param>
 		/// <returns> an array of bytes based on the hexadecimal string.</returns>
-		public static byte[] HexStringToByteArray(string hexString)
+		private static byte[] HexStringToByteArray(string hexString)
 		{
 			byte[] bytes = new byte[(hexString.Length - 2) / 2];
 

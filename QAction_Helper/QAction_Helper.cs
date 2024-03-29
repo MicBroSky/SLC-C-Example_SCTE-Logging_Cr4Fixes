@@ -80,11 +80,6 @@ public static class Parameter
 		public const int fakesctebutton_199 = 199;
 		/// <summary>PID: 199 | Type: write</summary>
 		public const int fakesctebutton = 199;
-		/// <summary>PID: 7999990 | Type: write</summary>
-		[EditorBrowsable(EditorBrowsableState.Never)]
-		public const int scte_contextmenu_7999990 = 7999990;
-		/// <summary>PID: 7999990 | Type: write</summary>
-		public const int scte_contextmenu = 7999990;
 	}
 	public class Scte
 	{
@@ -251,8 +246,6 @@ public class WriteParameters
 	public System.Object Fakescteipaddress {get { return Protocol.GetParameter(155); }set { Protocol.SetParameter(155, value); }}
 	/// <summary>PID: 199  | Type: write | DISCREETS: Fake Event = 1</summary>
 	public System.Object Fakesctebutton {get { return Protocol.GetParameter(199); }set { Protocol.SetParameter(199, value); }}
-	/// <summary>PID: 7999990  | Type: write | DISCREETS: Clear table = 1, Delete selected event(s)... = 2</summary>
-	public System.Object Scte_contextmenu {get { return Protocol.GetParameter(7999990); }set { Protocol.SetParameter(7999990, value); }}
 	public SLProtocolExt Protocol;
 	public WriteParameters(SLProtocolExt protocol)
 	{
@@ -286,8 +279,6 @@ public interface SLProtocolExt : SLProtocol
 	object Fakescteipaddress_155 { get; set; }
 	object Fakesctebutton_199 { get; set; }
 	object Fakesctebutton { get; set; }
-	object Scte_contextmenu_7999990 { get; set; }
-	object Scte_contextmenu { get; set; }
 	object Scte_key_8000001 { get; set; }
 	object Scte_key { get; set; }
 	object Scte_ts_8000002 { get; set; }
@@ -378,10 +369,6 @@ public class ConcreteSLProtocolExt : ConcreteSLProtocol, SLProtocolExt
 	public System.Object Fakesctebutton_199 {get { return GetParameter(199); }set { SetParameter(199, value); }}
 	/// <summary>PID: 199  | Type: write | DISCREETS: Fake Event = 1</summary>
 	public System.Object Fakesctebutton {get { return Write.Fakesctebutton; }set { Write.Fakesctebutton = value; }}
-	/// <summary>PID: 7999990  | Type: write | DISCREETS: Clear table = 1, Delete selected event(s)... = 2</summary>
-	public System.Object Scte_contextmenu_7999990 {get { return GetParameter(7999990); }set { SetParameter(7999990, value); }}
-	/// <summary>PID: 7999990  | Type: write | DISCREETS: Clear table = 1, Delete selected event(s)... = 2</summary>
-	public System.Object Scte_contextmenu {get { return Write.Scte_contextmenu; }set { Write.Scte_contextmenu = value; }}
 	/// <summary>PID: 8000001  | Type: read</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public System.Object Scte_key_8000001 {get { return GetParameter(8000001); }set { SetParameter(8000001, value); }}
