@@ -19,7 +19,7 @@ public static class QAction
 			object[] values = (object[])protocol.GetParameters(new uint[] { Parameter.fakesctehexvalue, Parameter.fakesctestream, Parameter.fakescteprogram, Parameter.fakescteoperationname, Parameter.fakescteipaddress, Parameter.lastprimarykey });
 
 			string hexString = Convert.ToString(values[0]);
-			var scteCells = new ScteExporter.AdditionalScteCells
+			var scteCells = new ScteExporter.ScteMetadata
 			{
 				Name = Convert.ToString(values[1]),
 				Program = Convert.ToString(values[2]),
@@ -29,7 +29,7 @@ public static class QAction
 			};
 
 			Scte35Event scte = Scte35Event.FromHex(hexString);
-			ScteExporter.OffloadingToIndexingDatabase(protocol, scte, scteCells);
+			ScteExporter.OffloadToIndexingDatabase(protocol, scte, scteCells);
 		}
 		catch (Exception ex)
 		{

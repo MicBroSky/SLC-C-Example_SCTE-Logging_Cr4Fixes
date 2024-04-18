@@ -98,7 +98,7 @@ Any inquiries can be addressed to:
 This protocol demonstrates how SCTE Events should be filled into your configured indexing database.
 This is achieved through using a "Create SCTE Events" button where you can fill in various parts of the event which would be set inside of a protocol. 
 After confirming these values, the SCTE Event is then processed and sent to your configured indexing database. Most of the values can be filled by using a hexadecimal string given by a SCTE command which this protocol simulates the translation of. 
-Once on your configured indexing database, you can use the ID of the protocol and the table's ID (80000000) in order to find the values from the table. 
+Once on your configured indexing database, you can use the ID of the protocol and the table's ID (80000000) in order to find the values from the table. The table is hidden as you are expected to read the table data from the indexing database instead of on the element.  
 
 The table features the following columns: 
 			-scte_key (Key)
@@ -106,7 +106,7 @@ The table features the following columns:
 			-scte_ts (Timestamp)
 				A UTC timestamp based on the SCTE signal.
 			-scte_opid (Operation ID) 
-				The value of the opid (operation ID) field on the SCTE object's structure.
+				The value of the opid (operation ID) field on the SCTE object's structure. This is sometimes not given in a device's SCTE implementation.
 			-scte_opname (Operation Name)
 				A text representation of the operation ID.
 			-scte_src (Source) 
