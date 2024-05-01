@@ -1,7 +1,7 @@
 using System;
-using QAction_1.SCTE35;
 using Skyline.DataMiner.Scripting;
-using Skyline.Protocol.SCTE35;
+using Skyline.DataMiner.Utils.Scte.HexParsing;
+using Skyline.DataMiner.Utils.Scte.IndexDatabaseExport;
 
 /// <summary>
 /// DataMiner QAction Class: Fake SCTE Event.
@@ -16,7 +16,17 @@ public static class QAction
 	{
 		try
 		{
-			object[] values = (object[])protocol.GetParameters(new uint[] { Parameter.fakesctehexvalue, Parameter.fakesctestream, Parameter.fakescteprogram, Parameter.fakescteoperationname, Parameter.fakescteipaddress, Parameter.lastprimarykey });
+			uint[] fakeSctParameterPids = new uint[]
+			{
+				Parameter.fakesctehexvalue,
+				Parameter.fakesctestream,
+				Parameter.fakescteprogram,
+				Parameter.fakescteoperationname,
+				Parameter.fakescteipaddress,
+				Parameter.lastprimarykey,
+			};
+
+			object[] values = (object[])protocol.GetParameters(fakeSctParameterPids);
 
 			string hexString = Convert.ToString(values[0]);
 			var scteCells = new ScteExporter.ScteMetadata
