@@ -2,7 +2,7 @@
 
 ## About
 
-Shows an example on how to use the [Skyline.DataMiner.Utils.SCte](https://github.com/SkylineCommunications/SLC-C-Example_SCTE-Logging) NuGet to both parse a hexadecimal file and offload the file to an indexing database set by your DMA. 
+Shows an example on how to use the [Skyline.DataMiner.Utils.Scte](https://github.com/SkylineCommunications/SLC-C-Example_SCTE-Logging) NuGet to both parse a hexadecimal file and offload the file to an indexing database set by your DMA. 
 
 This protocol demonstrates how SCTE Events should be filled into your configured indexing database.
 This is achieved through using a "Create SCTE Events" button where you can fill in various parts of the event which would be set inside of a protocol. 
