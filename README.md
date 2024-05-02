@@ -10,43 +10,43 @@ After confirming these values, the SCTE Event is then processed and sent to your
 Once on your configured indexing database, you can use the ID of the protocol and the table's ID (80000000) in order to find the values from the table. The table is hidden as you are expected to read the table data from the indexing database instead of on the element.  
 
 The table features the following columns: 
-> scte_key (Key)
+> scte_key (Key):
 	An autoincremented value that starts from 0 and saves it placement between reboots.
 
-> scte_ts (Timestamp)
+> scte_ts (Timestamp):
 	A UTC timestamp based on the SCTE signal.
 
-> scte_opid (Operation ID) 
+> scte_opid (Operation ID): 
 	The value of the opid (operation ID) field on the SCTE object's structure. This is sometimes not given in a device's SCTE implementation.
 
-> scte_opname (Operation Name)
+> scte_opname (Operation Name):
 	A text representation of the operation ID.
 
-> scte_src (Source) 
+> scte_src (Source): 
 	It is a combination of the name that the SCTE Hexadecimal might have provided and the IP address.
 
-> scte_str (Stream)
+> scte_str (Stream):
 	A representation of the source that the SCTE came from. It is usually provided by the SCTE Hexadecimal or from the device.
 
-> scte_pgm (Program)
+> scte_pgm (Program):
 	A representation of the device that the SCTE came from. It is usually the DataMiner Element's name.
 
-> scte_obj (Object) 
+> scte_obj (Object): 
 	A JSON representation of the SCTE 35 or SCTE104 operation used in this row.
 
-> scte_segevntid (Segmentation Event ID)
+> scte_segevntid (Segmentation Event ID):
 	A segmentation event identifier.
 
-> scte_segupid (Segmentation UPID) 
+> scte_segupid (Segmentation UPID): 
 	The Unique Program Identifier for the SCTE Event. It is separated by a '_' where the first part shows the service it came from through a string and the second part just being an unique ID. Ex: "telemundo_EPOO1825960702"
 
-> scte_segtypeid (Segmentation Type ID) 
+> scte_segtypeid (Segmentation Type ID): 
 	An ID that corresponds to the type of starting or ending event being used.
 
-> scte_segtypename (Segmenttion Type Name)
+> scte_segtypename (Segmenttion Type Name):
 	The Name of the SCTE Event.
 
-> scte_fld1 (Field 1)
+> scte_fld1 (Field 1):
 	An extra field to fill in any additional information. 
 
 ### About DataMiner
