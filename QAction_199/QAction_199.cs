@@ -23,20 +23,12 @@ public static class QAction
 				Parameter.fakescteprogram,
 				Parameter.fakescteoperationname,
 				Parameter.fakescteipaddress,
-				Parameter.lastprimarykey,
 			};
 
 			object[] values = (object[])protocol.GetParameters(fakeSctParameterPids);
 
 			string hexString = Convert.ToString(values[0]);
-			var scteCells = new ScteExporter.ScteMetadata
-			{
-				Name = Convert.ToString(values[1]),
-				Program = Convert.ToString(values[2]),
-				OperatorName = Convert.ToString(values[3]),
-				IP = Convert.ToString(values[4]),
-				PrimaryKey = Convert.ToInt64(values[5]),
-			};
+			var scteCells = new ScteExporter.ScteMetadata(Convert.ToString(values[1]), Convert.ToString(values[2]), Convert.ToString(values[4]),default,Convert.ToString(values[3]));
 
 			Scte35Event scte = Scte35Event.FromHex(hexString);
 			ScteExporter.OffloadToIndexingDatabase(protocol, scte, scteCells);

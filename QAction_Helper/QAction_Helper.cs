@@ -8,11 +8,6 @@ namespace Skyline.DataMiner.Scripting
 {
 public static class Parameter
 {
-	/// <summary>PID: 1 | Type: read</summary>
-	[EditorBrowsable(EditorBrowsableState.Never)]
-	public const int lastprimarykey_1 = 1;
-	/// <summary>PID: 1 | Type: read</summary>
-	public const int lastprimarykey = 1;
 	/// <summary>PID: 9 | Type: read</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public const int readme_9 = 9;
@@ -43,6 +38,11 @@ public static class Parameter
 	public const int fakescteipaddress_105 = 105;
 	/// <summary>PID: 105 | Type: read</summary>
 	public const int fakescteipaddress = 105;
+	/// <summary>PID: 7999999 | Type: read</summary>
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public const int lastprimarykey_7999999 = 7999999;
+	/// <summary>PID: 7999999 | Type: read</summary>
+	public const int lastprimarykey = 7999999;
 	public class Write
 	{
 		/// <summary>PID: 100 | Type: write</summary>
@@ -256,8 +256,6 @@ public interface SLProtocolExt : SLProtocol
 {
 	/// <summary>PID: 8000000</summary>
 	ScteQActionTable scte { get; set; }
-	object Lastprimarykey_1 { get; set; }
-	object Lastprimarykey { get; set; }
 	object Readme_9 { get; set; }
 	object Readme { get; set; }
 	object Fakesctepagebutton_100 { get; set; }
@@ -279,6 +277,8 @@ public interface SLProtocolExt : SLProtocol
 	object Fakescteipaddress_155 { get; set; }
 	object Fakesctebutton_199 { get; set; }
 	object Fakesctebutton { get; set; }
+	object Lastprimarykey_7999999 { get; set; }
+	object Lastprimarykey { get; set; }
 	object Scte_key_8000001 { get; set; }
 	object Scte_key { get; set; }
 	object Scte_ts_8000002 { get; set; }
@@ -311,11 +311,6 @@ public class ConcreteSLProtocolExt : ConcreteSLProtocol, SLProtocolExt
 {
 	/// <summary>PID: 8000000</summary>
 	public ScteQActionTable scte { get; set; }
-	/// <summary>PID: 1  | Type: read</summary>
-	[EditorBrowsable(EditorBrowsableState.Never)]
-	public System.Object Lastprimarykey_1 {get { return GetParameter(1); }set { SetParameter(1, value); }}
-	/// <summary>PID: 1  | Type: read</summary>
-	public System.Object Lastprimarykey {get { return GetParameter(1); }set { SetParameter(1, value); }}
 	/// <summary>PID: 9  | Type: read</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public System.Object Readme_9 {get { return GetParameter(9); }set { SetParameter(9, value); }}
@@ -369,6 +364,11 @@ public class ConcreteSLProtocolExt : ConcreteSLProtocol, SLProtocolExt
 	public System.Object Fakesctebutton_199 {get { return GetParameter(199); }set { SetParameter(199, value); }}
 	/// <summary>PID: 199  | Type: write | DISCREETS: Fake Event = 1</summary>
 	public System.Object Fakesctebutton {get { return Write.Fakesctebutton; }set { Write.Fakesctebutton = value; }}
+	/// <summary>PID: 7999999  | Type: read</summary>
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public System.Object Lastprimarykey_7999999 {get { return GetParameter(7999999); }set { SetParameter(7999999, value); }}
+	/// <summary>PID: 7999999  | Type: read</summary>
+	public System.Object Lastprimarykey {get { return GetParameter(7999999); }set { SetParameter(7999999, value); }}
 	/// <summary>PID: 8000001  | Type: read</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public System.Object Scte_key_8000001 {get { return GetParameter(8000001); }set { SetParameter(8000001, value); }}

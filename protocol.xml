@@ -63,25 +63,6 @@ Any inquiries can be addressed to:
 		<MinimumRequiredVersion>10.0.10.0 - 9454</MinimumRequiredVersion>
 	</Compliancies>
 	<Params>
-		<Param id="1" trending="false" save="true">
-			<Name>lastPrimaryKey</Name>
-			<Description>description</Description>
-			<Type>read</Type>
-			<Information>
-			</Information>
-			<Interprete>
-				<RawType>numeric text</RawType>
-				<Type>double</Type>
-				<LengthType>next param</LengthType>
-				<DefaultValue>0</DefaultValue>
-			</Interprete>
-			<Display>
-				<RTDisplay>false</RTDisplay>
-			</Display>
-			<Measurement>
-				<Type>number</Type>
-			</Measurement>
-		</Param>
 		<Param id="9" trending="false">
 			<Name>ReadMe</Name>
 			<Description>Read Me</Description>
@@ -469,6 +450,25 @@ It is usually the device IP Address of the element.]]>
 						<Value>1</Value>
 					</Discreet>
 				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="7999999" trending="false" save="true">
+			<Name>lastPrimaryKey</Name>
+			<Description>description</Description>
+			<Type>read</Type>
+			<Information>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<DefaultValue>0</DefaultValue>
+			</Interprete>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
 			</Measurement>
 		</Param>
 		<Param id="8000000">
