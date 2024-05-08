@@ -1,19 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net462</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
     <Company>Skyline Communications</Company>
     <Copyright>© Skyline Communications</Copyright>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\QAction_1\QAction_1.csproj" />
     <ProjectReference Include="..\QAction_Helper\QAction_Helper.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Skyline.DataMiner.Dev.Protocol" Version="10.4.5.1" />
-    <PackageReference Include="Skyline.DataMiner.Utils.Scte" Version="1.54778.6-main.6" />
+    <PackageReference Include="Skyline.DataMiner.Utils.Scte" Version="1.54778.9-main.9" />
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>

@@ -99,12 +99,12 @@ The table features the following columns:
 			-scte_obj (Object) 
 				A JSON representation of the SCTE 35 or SCTE104 operation used in this row.
 			-scte_segevntid (Segmentation Event ID)
-				A segmentation event identifier.
+				A 32-bit unique segmentation event identifier. Only one occurrence of a given segmentation_event_id value shall be active at any one time. 
 			-scte_segupid (Segmentation UPID) 
 				The Unique Program Identifier for the SCTE Event. It is separated by a '_' where the first part shows the service it came from through a string and the second part just being an unique ID. Ex: "telemundo_EPOO1825960702"
 			-scte_segtypeid (Segmentation Type ID) 
 				An ID that corresponds to the type of starting or ending event being used.
-			-scte_segtypename (Segmenttion Type Name)
+			-scte_segtypename (Segmentation Type Name)
 				The Name of the SCTE Event.
 			-scte_fld1 (Field 1)
 				An extra field to fill in any additional information. 
@@ -792,23 +792,16 @@ It is usually the device IP Address of the element.]]>
 	</Params>
 
 	<QActions>
-		<QAction id="1" name="Precompiled Code" encoding="csharp" options="precompile" />
-
 		<QAction id="199" name="Fake SCTE Event" encoding="csharp" triggers="199" />
 	</QActions>
-
 	<Groups>
 	</Groups>
-
 	<Triggers>
 	</Triggers>
-
 	<Actions>
 	</Actions>
-
 	<Timers>
 	</Timers>
-
 	<VersionHistory>
 		<Branches>
 			<Branch id="1">

@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 using Skyline.DataMiner.Scripting;
 using Skyline.DataMiner.Utils.Scte.HexParsing;
 using Skyline.DataMiner.Utils.Scte.IndexDatabaseExport;
